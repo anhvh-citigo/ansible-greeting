@@ -1,0 +1,10 @@
+---
+- name: Setup ansible
+  hosts: testvm
+  connection: local
+  become: true
+  become_method: sudo
+  vars:
+    ansible_install_method: pip
+  roles:
+    - roles/ansible

@@ -1,0 +1,33 @@
+---
+- name: test
+  hosts: testvm
+  gather_facts: false
+  become: true
+  handlers:
+  - name: resert sshd
+    service:
+      name: sshd
+      state: restarted
+
+  tasks:
+    - name: Create new user
+      user:
+        name: a1
+        state: present
+        password: "{{ 'Password1' | password_hash('sha512')}}"
+        update_password: on_create
+        shell: /bin/bash
+
+    - name: edit sshd config
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PasswordAuthentication '
+        insertafter: '#PasswordAuthentication'
+        line: 'PasswordAuthentication tes'
+        notify: restart_sshd
+
+    - name: Add sudo right for new user
+      copy:
+        dest: /etc/sudoers.d/a1
+        content: "a1 ALL=(root) NOPASSWD: ALL"
+        backup: true

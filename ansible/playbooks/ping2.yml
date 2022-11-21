@@ -1,0 +1,8 @@
+---
+- name: ping module demo
+  hosts: testvm
+  connection: local
+  become: true
+  tasks:
+    - name: test connection
+      ansible.builtin.ping:

@@ -1,0 +1,9 @@
+---
+  - name: "Get ping response"
+    connection: local
+    hosts: testvm
+    gather_facts: false
+    
+    roles:
+      - roles/install-python
+      # - roles/ansible

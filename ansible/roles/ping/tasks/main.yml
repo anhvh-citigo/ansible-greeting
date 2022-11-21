@@ -1,0 +1,17 @@
+---
+# tasks file for ping-host
+- name: Ping Executing
+  shell: "{{ ping_command }} {{ item }}"
+  loop: "{{ groups['targets'] }}"
+  register: command_output
+  ignore_errors: yes
+  no_log: true
+  changed_when: false
+
+- name: Ping Report
+  debug: 
+    msg: "PING SUCCESS"
+  when: item.rc == 0
+  loop: "{{ command_output.results }}"
+  loop_control: 
+    label: "Pingando {{ item.item }}"

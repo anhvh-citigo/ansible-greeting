@@ -1,0 +1,7 @@
+---
+# tasks file for ansible
+
+- name: Install Ansible via Pip.
+  pip:
+    name: ansible
+    version: "{{ ansible_install_version_pip | default(omit) }}"

@@ -1,0 +1,12 @@
+---
+- hosts: testvm
+  become: yes
+
+  tasks:
+    - name: "Install packages"
+      dnf: "name={{ item }} state=present"
+      with_items:
+        - nginx
+        - certbot
+        - postgresql
+        - postgresql-server
